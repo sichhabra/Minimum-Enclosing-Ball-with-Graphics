@@ -1,5 +1,9 @@
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 
 import javax.swing.JPanel;
 
@@ -11,5 +15,23 @@ public class CodePanel extends JPanel {
 		this.setPreferredSize(new Dimension(500, 600));
 		this.setBackground(new Color(230, 230, 230));
 		this.setName("Code Panel");
+	}
+	
+	@Override
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		Graphics2D g2 = (Graphics2D) g;
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		g2.setColor(Color.BLACK);
+		g2.setFont(new Font("Helvetica Neue", Font.PLAIN, 15));
+		int x_index = 15, y_index = 15;
+		for (Point p : PointList.points) {
+			g2.drawString("(" + p.getX() + "," + p.getY() + ")", x_index, y_index);
+			x_index += 120;
+			if (x_index >= 400) {
+				y_index += 30;
+				x_index = 15;
+			}
+		}
 	}
 }

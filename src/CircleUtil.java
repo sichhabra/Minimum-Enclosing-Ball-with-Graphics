@@ -1,26 +1,20 @@
 public class CircleUtil {
 
-	public Circle getCircle(Point p1, Point p2, Point p3) {
-
-		double a = p2.getX() - p1.getX();
-		double b = p2.getY() - p1.getY();
-		double c = p3.getX() - p1.getX();
-		double d = p3.getY() - p1.getY();
-
-		double e = a * (p1.getX() + p2.getX()) + b * (p1.getY() + p2.getY());
-		double f = c * (p1.getX() + p3.getX()) + d * (p1.getY() + p3.getY());
-		double g = 2 * (a * (p3.getY() - p2.getY()) - b * (p3.getX() - p2.getX()));
-
-		if (g == 0)
+	public static Circle getCircle(Point a, Point b, Point c) {
+		// Mathematical algorithm from Wikipedia: Circumscribed circle
+		double ox = (Math.min(Math.min(a.x, b.x), c.x) + Math.max(Math.min(a.x, b.x), c.x)) / 2;
+		double oy = (Math.min(Math.min(a.y, b.y), c.y) + Math.max(Math.min(a.y, b.y), c.y)) / 2;
+		double ax = a.x - ox, ay = a.y - oy;
+		double bx = b.x - ox, by = b.y - oy;
+		double cx = c.x - ox, cy = c.y - oy;
+		double d = (ax * (by - cy) + bx * (cy - ay) + cx * (ay - by)) * 2;
+		if (d == 0)
 			return null;
-
-		double centerX = (d * e - b * f) / g;
-		double centerY = (a * f - c * e) / g;
-		double radius = Math
-				.sqrt((p1.getX() - centerX) * (p1.getX() - centerX) + (p1.getY() - centerY) * (p1.getY() - centerY));
-		Circle circle = new Circle(new Point(centerX, centerY), radius);
-		return circle;
-
+		double x = ((ax * ax + ay * ay) * (by - cy) + (bx * bx + by * by) * (cy - ay) + (cx * cx + cy * cy) * (ay - by)) / d;
+		double y = ((ax * ax + ay * ay) * (cx - bx) + (bx * bx + by * by) * (ax - cx) + (cx * cx + cy * cy) * (bx - ax)) / d;
+		Point p = new Point(ox + x, oy + y);
+		double r = Math.max(Math.max(p.distance(a), p.distance(b)), p.distance(c));
+		return new Circle(p, r);
 	}
 
 }
