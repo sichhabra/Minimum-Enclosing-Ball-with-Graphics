@@ -51,7 +51,7 @@ public class CirclePanel extends JPanel {
 		this.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				//new Timer(100, taskPerformer).start();
+				new Timer(100, taskPerformer).start();
 				Point p = new Point(e.getX(), e.getY());
 				PointList.points.add(p);
 				State.currentCircle = CircleUtil.updateCircle(PointList.points, p);

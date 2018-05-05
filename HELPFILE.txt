@@ -1,0 +1,10 @@
+Compiling code.
+
+1) Come in src folder( cd CGProject/src).
+2) javac *.java.
+
+Running Code.
+
+1) If you are not in src folder, come in src folder( cd CGProject/src).
+2) java CreateUI.
+3) Click anywhere on white panel to start the algorithm.
