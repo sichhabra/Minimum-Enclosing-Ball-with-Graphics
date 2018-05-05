@@ -28,14 +28,17 @@ public class CodePanel extends JPanel {
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2.setFont(new Font("Helvetica Neue", Font.PLAIN, 15));
 		int x_index = 15, y_index = 20;
-		for (Point p : PointList.points) {
+		int size=PointList.points.size();
+		int start=Math.max(0, size-50);
+		for (int i=start;i<size;i++) {
+			Point p=PointList.points.get(i);
 			if(check(p)) {
 				g2.setColor(Color.RED);
 				g2.drawRoundRect(x_index-4, y_index-17, 112, 25, 20, 20);
 			}
 			g2.setColor(Color.BLACK);
 			g2.drawString("(" + p.getX() + "," + p.getY() + ")", x_index, y_index);
-			x_index += 120;
+			x_index += 150;
 			if (x_index >= 400) {
 				y_index += 30;
 				x_index = 15;

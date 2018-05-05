@@ -24,17 +24,23 @@ public class CircleUtil {
 		return circle;
 
 	}
-	
+
 	public static Circle updateCircle(List<Point> points, Point p) {
 
-		if (State.currentCircle != null && State.currentCircle.contains(p)) {
+		if (State.currentCircle == null) {
+			return new Circle(p, 0);
+		}
+
+		else if (State.currentCircle != null && State.currentCircle.contains(p)) {
 			NotificationMessage.index = 0;
 			return State.currentCircle;
 		}
+
 		NotificationMessage.index = 1;
 		Circle c = new Circle(p, 0);
 
 		if (!c.contains(p) && c.radius == 0D) {
+			State.p1=p;
 			c = CircleUtil.getCircle(c.center, p);
 		} else {
 			for (int i = 0; i < points.size(); i++) {
@@ -42,6 +48,8 @@ public class CircleUtil {
 				if (!c.contains(q)) {
 					if (c.radius == 0D) {
 						c = CircleUtil.getCircle(p, q);
+						State.p1=p;
+						State.p2=q;
 					} else {
 						c = randomizedIncremental(points.subList(0, i + 1), p, q);
 					}
@@ -51,6 +59,8 @@ public class CircleUtil {
 		return c;
 	}
 
+	//Used https://www.nayuki.io/page/smallest-enclosing-circle.
+	
 	private static Circle randomizedIncremental(List<Point> points, Point p, Point q) {
 		Circle circ = CircleUtil.getCircle(p, q);
 		State.p1 = p;
